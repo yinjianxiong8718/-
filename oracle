@@ -251,7 +251,6 @@ select timestamp_to_scn(to_timestamp('2009-03-13 09:00:00','YYYY-MM-DD HH:MI:SS'
 
 这是reporttest表中就是scn点的reportinfo数据.处理即可。
 
-
 --查询用户中所有的表名及表中的数据量
 create or replace function count_rows(table_name in varchar2,owner in varchar2 default null)
   return number authid current_user IS num_rows number;stmt varchar2(2000);
