@@ -1,0 +1,98 @@
+1.python中的关键字：
+assert,	except,	 global,	  lambda,	nonlocal,	pass,	raise,	yield
+2.正则表达式详解网址：
+http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html
+3.匹配任意字符（包括换行符）：
+([\s\S]*) 、“([\d\D]*)”、“([\w\W]*)”
+4.java网络爬虫案例：
+https://www.ibm.com/developerworks/cn/opensource/os-cn-crawler/
+
+5.爬虫系统学习：
+http://python.jobbole.com/81332/
+
+6.Python re 的主要功能
+Python 的 re 正则表达式模块定义了一系列函数，常量以及异常；同时，正则表达式被编译成‘ RegexObject ’实例，本身可以为不同的操作提供方法。接下来简要介绍一下这些函数的功能和用法。
+compile
+re.compile(pattern[, flags])
+把正则表达式的模式和标识转化成正则表达式对象，供 match() 和 search() 这两个函数使用。
+re 所定义的 flag 包括：
+re.I 忽略大小写
+re.L 表示特殊字符集 \w, \W, \b, \B, \s, \S 依赖于当前环境
+re.M 多行模式
+re.S 即为’ . ’并且包括换行符在内的任意字符（’ . ’不包括换行符）
+re.U 表示特殊字符集 \w, \W, \b, \B, \d, \D, \s, \S 依赖于 Unicode 字符属性数据库
+re.X 为了增加可读性，忽略空格和’ # ’后面的注释
+例：以下两种用法结果相同：
+A)
+1
+2	compiled_pattern = re.compile(pattern) 
+result = compiled_pattern.match(string)
+B)
+1	result = re.match(pattern, string)
+search
+re.search(pattern, string[, flags])
+在字符串中查找匹配正则表达式模式的位置，返回 MatchObject 的实例，如果没有找到匹配的位置，则返回 None。
+对于已编译的正则表达式对象来说（re.RegexObject），有以下 search 的方法：
+search (string[, pos[, endpos]])
+若 regex 是已编译好的正则表达式对象，regex.search(string, 0, 50) 等同于 regex.search(string[:50], 0)。
+具体示例如下。
+1
+2
+3	>>> pattern = re.compile("a") 
+>>> pattern.search("abcde")     # Match at index 0 
+>>> pattern.search("abcde", 1)  # No match;
+match
+re.match(pattern, string[, flags])
+判断 pattern 是否在字符串开头位置匹配。对于 RegexObject，有：
+match(string[, pos[, endpos]])
+match() 函数只在字符串的开始位置尝试匹配正则表达式，也就是只报告从位置 0 开始的匹配情况，而 search() 函数是扫描整个字符串来查找匹配。如果想要搜索整个字符串来寻找匹配，应当用 search()。
+split
+re.split(pattern, string[, maxsplit=0, flags=0])
+此功能很常用，可以将将字符串匹配正则表达式的部分割开并返回一个列表。对 RegexObject，有函数：
+split(string[, maxsplit=0])
+例如，利用上面章节中介绍的语法：
+1
+2
+3
+4
+5
+6	>>> re.split('\W+', 'test, test, test.') 
+['test', 'test', 'test', ''] 
+>>> re.split('(\W+)', ' test, test, test.') 
+[' test ', ', ', ' test ', ', ', ' test ', '.', ''] 
+>>> re.split('\W+', ' test, test, test.', 1) 
+[' test ', ' test, test.']
+对于一个找不到匹配的字符串而言，split 不会对其作出分割，如：
+1
+2	>>> re.split('a*', 'hello world') 
+['hello world']
+findall
+re.findall(pattern, string[, flags])
+在字符串中找到正则表达式所匹配的所有子串，并组成一个列表返回。同样 RegexObject 有：
+findall(string[, pos[, endpos]])
+示例如下：
+1
+2	#get all content enclosed with [], and return a list 
+>>> return_list = re.findall("(\[.*?\])",string)
+finditer
+re.finditer(pattern, string[, flags])
+和 findall 类似，在字符串中找到正则表达式所匹配的所有子串，并组成一个迭代器返回。同样 RegexObject 有：
+finditer(string[, pos[, endpos]])
+sub
+re.sub(pattern, repl, string[, count, flags])
+在字符串 string 中找到匹配正则表达式 pattern 的所有子串，用另一个字符串 repl 进行替换。如果没有找到匹配 pattern 的串，则返回未被修改的 string。Repl 既可以是字符串也可以是一个函数。对于 RegexObject 有：
+sub(repl, string[, count=0])
+此语法的示例有：
+1
+2
+3	>>> p = re.compile( '(one|two|three)') 
+ >>> p.sub( 'num', 'one word two words three words') 
+'num word num words num words'
+同样可以用以下方法，并指定 count 为 1（只替换第一个）：
+>>> p.sub( 'num', ' one word two words three words', count=1)
+' num word two words three words'
+subn
+re.subn(pattern, repl, string[, count, flags])
+该函数的功能和 sub() 相同，但它还返回新的字符串以及替换的次数。同样 RegexObject 有：
+subn(repl, string[, count=0])
+
